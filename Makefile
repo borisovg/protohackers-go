@@ -18,6 +18,15 @@ clean:
 $(BIN_FILE): $(BIN_DIR) $(SRC_FILES)
 	CGO_ENABLED=0 GOOS=linux go build -o $@ $(SRC_DIR)/main.go
 
+$(SRC_DIR):
+	mkdir $(SRC_DIR) && \
+		cd $(SRC_DIR) && \
+		go mod init protohackers/$(DIR) && \
+		printf "%b\n" "package main\n\nfunc main() {\n}" > main.go
+	go work use $(SRC_DIR)
+
+new: $(SRC_DIR)
+
 rsync: $(BIN_FILE)
 	rsync -avP $(BIN_FILE) $(SSH_USER)@$(SSH_FQDN):~/protohackers-go/
 	
