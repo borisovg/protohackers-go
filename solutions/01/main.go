@@ -41,8 +41,10 @@ func main() {
 				}
 
 				log.Println("response", string(res))
-				client.Write(res)
-				client.Write([]byte("\n"))
+
+				if err == nil {
+					_, err = client.Write(append(res, []byte("\n")...))
+				}
 
 				if err != nil {
 					break

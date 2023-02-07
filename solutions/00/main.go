@@ -26,7 +26,11 @@ func main() {
 		log.Println("connection from", conn.RemoteAddr())
 
 		go func(c net.Conn) {
-			io.Copy(c, c)
+			_, err := io.Copy(c, c)
+			if err != nil {
+				log.Println("pipe error", err)
+			}
+
 			c.Close()
 		}(conn)
 	}

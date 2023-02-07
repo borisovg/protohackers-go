@@ -5,6 +5,7 @@ SRC_DIR := solutions/$(DIR)
 SRC_FILES := $(shell find $(SRC_DIR) -name '*.go') $(SRC_DIR)/go.mod
 
 all:
+	golangci-lint run $(SRC_DIR)
 	go run $(SRC_DIR)/main.go
 
 $(BIN_DIR):
